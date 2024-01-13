@@ -2,13 +2,19 @@ package handlers
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gmadharh/hack-united/be-app/internal/models"
+	"github.com/gmadharh/hack-united/be-app/internal/utils"
 )
 
 type UserHandler struct {
 	DB *models.UserModelImpl
+}
+
+func NewUserHandler(db *models.UserModelImpl) *UserHandler {
+	return &UserHandler{DB: db}
 }
 
 func (userHandler *UserHandler) CreateUser(context *gin.Context) {
@@ -16,7 +22,90 @@ func (userHandler *UserHandler) CreateUser(context *gin.Context) {
 
 	if err := context.ShouldBindJSON(&user); err != nil {
 		context.JSON(http.StatusNotAcceptable, gin.H{
-			"message": "Error binding JSON"
+			"message": "Error binding JSON",
+			"error":   err,
 		})
+		return
 	}
+
+	hashedPassword, err := utils.HashPassword(user.Password)
+
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{
+			"message": "Error hashing password",
+			"error":   err,
+		})
+		return
+	}
+
+	user.Password = hashedPassword
+
+	err = userHandler.DB.CreateUser(user)
+
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{
+			"message": "Error creating user",
+			"error":   err,
+		})
+		return
+	}
+
+	context.JSON(http.StatusCreated, gin.H{
+		"message": "Created user",
+	})
+}
+
+func (userHandler *UserHandler) GetUserByID(context *gin.Context) {
+	param := context.Param("id")
+
+	id, err := strconv.Atoi(param)
+
+	if err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{
+			"message": "Error converting parameter to integer",
+			"error":   err,
+		})
+		return
+	}
+
+	user, err := userHandler.DB.GetUserByID(id)
+
+	if err != nil {
+		context.JSON(http.StatusNotFound, gin.H{
+			"message": "User Not found",
+			"erorr":   err,
+		})
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{
+		"user": user,
+	})
+}
+
+func (userHandler *UserHandler) GetUserByEmail(context *gin.Context) {
+
+	var user *models.User
+
+	if err := context.ShouldBindJSON(&user); err != nil {
+		context.JSON(http.StatusNotAcceptable, gin.H{
+			"message": "Error binding JSON",
+			"error":   err,
+		})
+		return
+	}
+
+	user, err := userHandler.DB.GetUserByEmail(user.Email)
+
+	if err != nil {
+		context.JSON(http.StatusNotFound, gin.H{
+			"message": "User Not found",
+			"erorr":   err,
+		})
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{
+		"user": user,
+	})
 }

@@ -5,6 +5,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/gmadharh/hack-united/be-app/config"
+	"github.com/gmadharh/hack-united/be-app/internal/handlers"
+	"github.com/gmadharh/hack-united/be-app/internal/models"
+	"github.com/gmadharh/hack-united/be-app/internal/routes"
 	"github.com/gmadharh/hack-united/be-app/pkg/db"
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -37,6 +40,11 @@ func main() {
 
 		c.Next()
 	})
+
+	userModel := models.NewUserModel(database)
+	userHandler := handlers.NewUserHandler(userModel)
+	userRouter := routes.NewUserRouter(userHandler)
+	userRouter.InitializeRouter(r)
 
 	log.Fatal(r.Run(cf.Port))
 }
