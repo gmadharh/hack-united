@@ -41,6 +41,34 @@ func (userModel *UserModelImpl) CreateUser(user User) error {
 	return nil
 }
 
+func (UserModel *UserModelImpl) GetAllUsers() ([]User, error) {
+	query := `SELECT * FROM Users`
+
+	rows, err := UserModel.DB.Query(query)
+
+	if err != nil {
+		fmt.Println("Error querying users table", err)
+		return nil, err
+	}
+
+	var users []User
+
+	for rows.Next() {
+		var user User
+
+		err := rows.Scan(&user.ID, &user.Email, &user.Password, &user.FirstName, &user.LastName, &user.Points)
+
+		if err != nil {
+			fmt.Println("Error scanning user into struct", err)
+			return nil, err
+		}
+
+		users = append(users, user)
+	}
+
+	return users, nil
+}
+
 func (userModel *UserModelImpl) GetUserByID(id int) (*User, error) {
 	query := `SELECT * FROM Users WHERE id = ? `
 

@@ -13,6 +13,7 @@ type ResolutionChallenge struct {
 }
 
 type ResolutionChallengeModel interface {
+	CreateChallenge(challenge ResolutionChallenge) error
 }
 
 type ResolutionChallengeModelImpl struct {
@@ -35,6 +36,32 @@ func (resolutionChallengeModel *ResolutionChallengeModelImpl) CreateChallenge(ch
 	}
 
 	return nil
+}
+
+func (resolutionChallengeModel *ResolutionChallengeModelImpl) GetUserChallenges(id int) ([]ResolutionChallenge, error) {
+	query := `SELECT * FROM ResolutionChallenge WHERE user_id = ?`
+
+	var challenges []ResolutionChallenge
+
+	rows, err := resolutionChallengeModel.DB.Query(query, id)
+
+	if err != nil {
+		fmt.Println("Error Querying database", err)
+		return nil, err
+	}
+
+	for rows.Next() {
+		var challenge ResolutionChallenge
+
+		rows.Scan(&challenge.ID, &challenge.Challenge, &challenge.UserID, &challenge.IsCompleted)
+
+		if err != nil {
+			fmt.Println("Error scanning into challenge srruct", err)
+			return nil, err
+		}
+	}
+
+	return challenges, nil
 }
 
 func (resolutionChallengeModel *ResolutionChallengeModelImpl) DeleteChallenge(id int) error {

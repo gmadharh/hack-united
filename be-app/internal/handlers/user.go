@@ -55,6 +55,22 @@ func (userHandler *UserHandler) CreateUser(context *gin.Context) {
 	})
 }
 
+func (userHandler *UserHandler) GetAllUsers(context *gin.Context) {
+	users, err := userHandler.DB.GetAllUsers()
+
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{
+			"message": "Error getting users",
+			"error":   err,
+		})
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{
+		"users": users,
+	})
+}
+
 func (userHandler *UserHandler) GetUserByID(context *gin.Context) {
 	param := context.Param("id")
 
