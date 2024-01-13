@@ -5,6 +5,7 @@ import AppLayout from "./AppLayout";
 
 import SpinWheel from "./pages/SpinWheel";
 import PageNotFound from "./pages/PageNotFound";
+import RegisterUser from "./pages/RegisterUser";
 
 import {
   createBrowserRouter,
@@ -25,6 +26,7 @@ function App() {
     createRoutesFromElements(
       <Route path="/" element={<AppLayout />} >
         <Route index element={<SpinWheel />} />
+        <Route path="register" element={<RegisterUser />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>
     )
