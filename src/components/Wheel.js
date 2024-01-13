@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Wheel } from 'react-custom-roulette'
+import '../style/style.css'
 
 const data = [
   { option: '0', style: { backgroundColor: 'green', textColor: 'black' } },
@@ -34,7 +35,9 @@ const WheelComponent = () => {
           setMustSpin(false)
         }}
       />
-      <button onClick={handleSpinClick}>SPIN</button>
+      <button id="spin-btn" onClick={handleSpinClick}>
+        SPIN
+      </button>
     </>
   )
 }

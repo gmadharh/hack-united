@@ -1,5 +1,5 @@
 import React from 'react'
-import '../style/ButtonTile.css'
+import '../style/style.css'
 
 function ButtonTile({ buttons }) {
   return (
