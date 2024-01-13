@@ -50,7 +50,7 @@ func (userModel *UserModelImpl) GetUserByID(id int) (*User, error) {
 
 	row := userModel.DB.QueryRow(query, id)
 
-	err := row.Scan(&user.Email, &user.Password, &user.FirstName, &user.LastName, &user.Points)
+	err := row.Scan(&user.ID, &user.Email, &user.Password, &user.FirstName, &user.LastName, &user.Points)
 
 	if err != nil {
 		fmt.Println("Error scanning user into struct", err)
@@ -67,7 +67,7 @@ func (userModel *UserModelImpl) GetUserByEmail(email string) (*User, error) {
 
 	row := userModel.DB.QueryRow(query, email)
 
-	err := row.Scan(&user.Email, &user.Password, &user.FirstName, &user.LastName, &user.Points)
+	err := row.Scan(&user.ID, &user.Email, &user.Password, &user.FirstName, &user.LastName, &user.Points)
 
 	if err != nil {
 		fmt.Println("Error scanning user into struct", err)
