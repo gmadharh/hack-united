@@ -14,6 +14,9 @@ type User struct {
 }
 
 type UserModel interface {
+	CreateUser(user User) error
+	GetuserByID(id int) (*User, error)
+	GetUserByEmail(email string) (*User, error)
 }
 
 type UserModelImpl struct {
