@@ -8,6 +8,7 @@ DROP TABLE IF EXISTS Users;
 CREATE TABLE Users(
     ID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     email VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
     points INT NOT NULL
@@ -22,5 +23,6 @@ CREATE TABLE ResolutionChallenge(
     id INT PRIMARY KEY AUTO_INCREMENT,
     challenge VARCHAR(255) NOT NULL,
     user_id INT NOT NULL,
+    is_completed BOOL NOT NULL,
     FOREIGN KEY (user_id) REFERENCES Users(id)
-)
+);
