@@ -31,8 +31,6 @@ func NewUserModel(db *sql.DB) *UserModelImpl {
 func (userModel *UserModelImpl) CreateUser(user User) error {
 	query := `INSERT INTO Users (email, password, first_name, last_name, points) VALUES (?, ?, ?, ?, ?)`
 
-	user.Points = 0
-
 	_, err := userModel.DB.Exec(query, user.Email, user.Password, user.FirstName, user.LastName, user.Points)
 
 	if err != nil {
