@@ -51,5 +51,10 @@ func main() {
 	resolutionRouter := routes.NewResolutionSubjectRouter(resolutionHandler)
 	resolutionRouter.InitializeRouter(r)
 
+	challengeModel := models.NewResolutionChallengeModel(database)
+	challengeHandler := handlers.NewResolutionChallengeModel(challengeModel)
+	challengeRouter := routes.NewResolutionChallengeRouter(challengeHandler)
+	challengeRouter.InitializeRouter(r)
+
 	log.Fatal(r.Run(cf.Port))
 }

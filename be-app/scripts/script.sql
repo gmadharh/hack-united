@@ -26,3 +26,13 @@ CREATE TABLE ResolutionChallenge(
     is_completed BOOL NOT NULL,
     FOREIGN KEY (user_id) REFERENCES Users(id)
 );
+
+INSERT INTO ResolutionSubject(subject) 
+VALUES
+    ('Fitness and Health'),
+    ('Learning and Development'),
+    ('Career and Professional Growth'),
+    ('Financial Resolutions'),
+    ('Relationships'),
+    ('Hobbies and Creativity'),
+    ('Social and Community Involvement');

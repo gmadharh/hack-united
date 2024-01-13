@@ -126,6 +126,32 @@ func (userHandler *UserHandler) GetUserByEmail(context *gin.Context) {
 	})
 }
 
+func (userHandler *UserHandler) UpdateUser(context *gin.Context) {
+	var user models.User
+
+	if err := context.ShouldBindJSON(&user); err != nil {
+		context.JSON(http.StatusNotAcceptable, gin.H{
+			"message": "Error binding JSON",
+			"error":   err,
+		})
+		return
+	}
+
+	err := userHandler.DB.UpdateUser(user)
+
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{
+			"message": "Error updating user",
+			"error":   err,
+		})
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{
+		"message": "Updated user",
+	})
+}
+
 func (userHandler *UserHandler) AuthenticateUser(context *gin.Context) {
 	var userLogin models.User
 
