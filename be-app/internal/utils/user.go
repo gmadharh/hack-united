@@ -27,7 +27,7 @@ func ComparePasswords(hashedPassword, password string) bool {
 	return err == nil
 }
 
-func GenerateJWTToken(firstName, lastName, email string, id, role int) (string, error) {
+func GenerateJWTToken(firstName, lastName, email string, id int) (string, error) {
 
 	token := jwt.New(jwt.SigningMethodHS256)
 

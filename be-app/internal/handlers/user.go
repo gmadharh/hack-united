@@ -109,3 +109,48 @@ func (userHandler *UserHandler) GetUserByEmail(context *gin.Context) {
 		"user": user,
 	})
 }
+
+func (userHandler *UserHandler) AuthenticateUser(context *gin.Context) {
+	var userLogin models.User
+
+	if err := context.ShouldBindJSON(&userLogin); err != nil {
+		context.JSON(http.StatusNotAcceptable, gin.H{
+			"message": "Error binding to JSON",
+			"error":   err,
+		})
+		return
+	}
+
+	user, err := userHandler.DB.GetUserByEmail(userLogin.Email)
+
+	if err != nil {
+		context.JSON(http.StatusNotFound, gin.H{
+			"message": "User not found",
+			"error":   err,
+		})
+		return
+	}
+
+	matches := utils.ComparePasswords(userLogin.Password, user.Password)
+
+	if !matches {
+		context.JSON(http.StatusNotAcceptable, gin.H{
+			"message": "Passwords do not match",
+		})
+		return
+	}
+
+	token, err := utils.GenerateJWTToken(user.FirstName, user.LastName, user.Email, user.ID)
+
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{
+			"message": "Error generating JWT",
+			"error":   err,
+		})
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{
+		"token": token,
+	})
+}
