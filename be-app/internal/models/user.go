@@ -33,7 +33,7 @@ func (userModel *UserModelImpl) CreateUser(user User) error {
 
 	user.Points = 0
 
-	_, err := userModel.DB.Exec(query, user.Email, user.Password, user.FirstName, user.LastName)
+	_, err := userModel.DB.Exec(query, user.Email, user.Password, user.FirstName, user.LastName, user.Points)
 
 	if err != nil {
 		fmt.Println("Error inserting into users table", err)
@@ -44,7 +44,7 @@ func (userModel *UserModelImpl) CreateUser(user User) error {
 }
 
 func (userModel *UserModelImpl) GetUserByID(id int) (*User, error) {
-	query := `SELECT * FROM User WHERE id = ? `
+	query := `SELECT * FROM Users WHERE id = ? `
 
 	var user User
 
@@ -61,7 +61,7 @@ func (userModel *UserModelImpl) GetUserByID(id int) (*User, error) {
 }
 
 func (userModel *UserModelImpl) GetUserByEmail(email string) (*User, error) {
-	query := `SELECT * FROM User WHERE email = ? `
+	query := `SELECT * FROM Users WHERE email = ? `
 
 	var user User
 

@@ -46,5 +46,10 @@ func main() {
 	userRouter := routes.NewUserRouter(userHandler)
 	userRouter.InitializeRouter(r)
 
+	resolutionModel := models.NewResolutionModel(database)
+	resolutionHandler := handlers.NewResolutionHandler(resolutionModel)
+	resolutionRouter := routes.NewResolutionSubjectRouter(resolutionHandler)
+	resolutionRouter.InitializeRouter(r)
+
 	log.Fatal(r.Run(cf.Port))
 }
