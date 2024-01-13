@@ -11,6 +11,7 @@ type User struct {
 	Password  string `json:"password" db:"password"`
 	FirstName string `json:"firstName" db:"first_name"`
 	LastName  string `json:"lastName" db:"last_name"`
+	Points    int    `json:"points" db:"points"`
 }
 
 type UserModel interface {
@@ -28,7 +29,9 @@ func NewUserModel(db *sql.DB) *UserModelImpl {
 }
 
 func (userModel *UserModelImpl) CreateUser(user User) error {
-	query := `INSERT INTO Users (email, password, first_name, last_name) VALUES (?, ?, ?, ?)`
+	query := `INSERT INTO Users (email, password, first_name, last_name, points) VALUES (?, ?, ?, ?, ?)`
+
+	user.Points = 0
 
 	_, err := userModel.DB.Exec(query, user.Email, user.Password, user.FirstName, user.LastName)
 
