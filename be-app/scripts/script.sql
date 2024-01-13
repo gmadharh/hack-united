@@ -26,3 +26,5 @@ CREATE TABLE ResolutionChallenge(
     is_completed BOOL NOT NULL,
     FOREIGN KEY (user_id) REFERENCES Users(id)
 );
+
+INSERT INTO ResolutionSubject(subject) 

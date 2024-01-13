@@ -15,6 +15,7 @@ func NewResolutionChallengeRouter(resolutionhandler *handlers.ResolutionChalleng
 
 func (resolutionRouter *ResolutionChallengeRouter) InitializeRouter(router *gin.Engine) {
 	router.GET("/user/resolution-challenge/:id", resolutionRouter.Resolutionhandler.GetUserChallenges)
+	router.POST("/user/resolution-challenge/generate", resolutionRouter.Resolutionhandler.GenerateUserChallenges)
 	router.POST("/user/resolution-challenge", resolutionRouter.Resolutionhandler.CreateChallenge)
 	router.DELETE("/user/resolution-challenge/:id", resolutionRouter.Resolutionhandler.DeleteChallenge)
 }
