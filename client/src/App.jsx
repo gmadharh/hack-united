@@ -1,5 +1,5 @@
 import "./App.css";
-import ButtonTile from "./components/ButtonTile";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import AppLayout from "./AppLayout";
 
@@ -7,6 +7,7 @@ import SpinWheel from "./pages/SpinWheel";
 import PageNotFound from "./pages/PageNotFound";
 import RegisterUser from "./pages/RegisterUser";
 import UserSignIn from "./pages/UserSignIn";
+import Home from "./pages/Home";
 
 import {
   createBrowserRouter,
@@ -15,6 +16,8 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
+
+const queryClient = new QueryClient();
 
 function App() {
   // const buttons = [
@@ -25,8 +28,9 @@ function App() {
 
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route path="/" element={<AppLayout />} >
-        <Route index element={<SpinWheel />} />
+      <Route path="/" element={<AppLayout />}>
+        <Route index element={<Home />} />
+        <Route path="dashboard" element={<SpinWheel />} />
         <Route path="register" element={<RegisterUser />} />
         <Route path="sign-in" element={<UserSignIn />} />
         <Route path="*" element={<PageNotFound />} />
@@ -35,10 +39,9 @@ function App() {
   );
 
   return (
-    <RouterProvider router={router} />
-    // <div className="App bg-center bg-contain pb-48 min-h-screen">
-    //   <SpinWheel />
-    // </div>
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
   );
 }
 

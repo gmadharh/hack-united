@@ -8,6 +8,9 @@ const Navbar = () => {
       </Link>
       <div>
         <div className="flex gap-5">
+          <Link to="/dashboard" className="text-xl font-medium text-white">
+            <p>Dashboard</p>
+          </Link>
           <Link to="/sign-in" className="text-xl font-medium text-white">
             <p>Sign In</p>
           </Link>
