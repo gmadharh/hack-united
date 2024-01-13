@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  backend-service: 
+    build: ./be-app
+    volumes:
+      - ./be-app:/app
+    ports:
+      - 8080:8080
+  
+
+  frontend-service:
+    build: ./client
+    volumes:
+      - ./client/:/app
+    ports:
+      - 3000:3000
+  
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: Megamitensei00
+      MYSQL_DATABASE: NewYearsChallenge
+      MYSQL_USER: resolution
+      MYSQL_PASSWORD: Megamitensei00
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./be-app/scripts/script.sql:/docker-entrypoint-initdb.d/script.sql
+      - ./db-data:/var/lib/mysql
