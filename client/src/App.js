@@ -1,7 +1,6 @@
 import './App.css'
 import WheelComponent from './components/Wheel'
 import ButtonTile from './components/ButtonTile'
-import './style/style.css'
 
 function App() {
   const buttons = [
@@ -11,11 +10,11 @@ function App() {
   ]
 
   return (
-    <div className="App">
+    <div className="App min-h-screen">
       <h1>Name of App</h1>
       <ButtonTile buttons={buttons} />
       <div className="wheel">
-        <WheelComponent />
+        {/* <WheelComponent /> */}
       </div>
     </div>
   )

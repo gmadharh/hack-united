@@ -1,11 +1,11 @@
 import React from 'react'
-import '../style/style.css'
 
 function ButtonTile({ buttons }) {
   return (
     <div className="button-tile">
       {buttons.map((button, index) => (
-        <button key={index} onClick={button.onClick}>
+        <button className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
+        key={index} onClick={button.onClick}>
           {button.label}
         </button>
       ))}
