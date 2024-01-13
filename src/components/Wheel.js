@@ -10,6 +10,11 @@ const data = [
 const WheelComponent = () => {
   const [mustSpin, setMustSpin] = useState(false)
   const [prizeNumber, setPrizeNumber] = useState(0)
+  const [wheelData, setWheelData] = useState([
+    { option: '0', style: { backgroundColor: 'green', textColor: 'black' } },
+    { option: '1', style: { backgroundColor: 'white' } },
+    { option: '2' },
+  ])
 
   const handleSpinClick = () => {
     if (!mustSpin) {
@@ -24,7 +29,7 @@ const WheelComponent = () => {
       <Wheel
         mustStartSpinning={mustSpin}
         prizeNumber={prizeNumber}
-        data={data}
+        data={wheelData}
         onStopSpinning={() => {
           setMustSpin(false)
         }}
