@@ -31,9 +31,7 @@ func NewUserModel(db *sql.DB) *UserModelImpl {
 func (userModel *UserModelImpl) CreateUser(user User) error {
 	query := `INSERT INTO Users (email, password, first_name, last_name, points) VALUES (?, ?, ?, ?, ?)`
 
-	user.Points = 0
-
-	_, err := userModel.DB.Exec(query, user.Email, user.Password, user.FirstName, user.LastName)
+	_, err := userModel.DB.Exec(query, user.Email, user.Password, user.FirstName, user.LastName, user.Points)
 
 	if err != nil {
 		fmt.Println("Error inserting into users table", err)
@@ -43,14 +41,42 @@ func (userModel *UserModelImpl) CreateUser(user User) error {
 	return nil
 }
 
+func (UserModel *UserModelImpl) GetAllUsers() ([]User, error) {
+	query := `SELECT * FROM Users`
+
+	rows, err := UserModel.DB.Query(query)
+
+	if err != nil {
+		fmt.Println("Error querying users table", err)
+		return nil, err
+	}
+
+	var users []User
+
+	for rows.Next() {
+		var user User
+
+		err := rows.Scan(&user.ID, &user.Email, &user.Password, &user.FirstName, &user.LastName, &user.Points)
+
+		if err != nil {
+			fmt.Println("Error scanning user into struct", err)
+			return nil, err
+		}
+
+		users = append(users, user)
+	}
+
+	return users, nil
+}
+
 func (userModel *UserModelImpl) GetUserByID(id int) (*User, error) {
-	query := `SELECT * FROM User WHERE id = ? `
+	query := `SELECT * FROM Users WHERE id = ? `
 
 	var user User
 
 	row := userModel.DB.QueryRow(query, id)
 
-	err := row.Scan(user.Email, user.Password, user.FirstName, user.LastName)
+	err := row.Scan(&user.ID, &user.Email, &user.Password, &user.FirstName, &user.LastName, &user.Points)
 
 	if err != nil {
 		fmt.Println("Error scanning user into struct", err)
@@ -61,13 +87,13 @@ func (userModel *UserModelImpl) GetUserByID(id int) (*User, error) {
 }
 
 func (userModel *UserModelImpl) GetUserByEmail(email string) (*User, error) {
-	query := `SELECT * FROM User WHERE email = ? `
+	query := `SELECT * FROM Users WHERE email = ? `
 
 	var user User
 
 	row := userModel.DB.QueryRow(query, email)
 
-	err := row.Scan(user.Email, user.Password, user.FirstName, user.LastName)
+	err := row.Scan(&user.ID, &user.Email, &user.Password, &user.FirstName, &user.LastName, &user.Points)
 
 	if err != nil {
 		fmt.Println("Error scanning user into struct", err)
