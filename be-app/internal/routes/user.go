@@ -19,4 +19,5 @@ func (userRouter *UserRouter) InitializeRouter(route *gin.Engine) {
 	route.GET("/users/email", userRouter.UserHandler.GetUserByEmail)
 	route.POST("/users/new", userRouter.UserHandler.CreateUser)
 	route.POST("users/login", userRouter.UserHandler.AuthenticateUser)
+	route.PUT("/users/:id", userRouter.UserHandler.UpdateUser)
 }

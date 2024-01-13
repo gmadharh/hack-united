@@ -102,3 +102,16 @@ func (userModel *UserModelImpl) GetUserByEmail(email string) (*User, error) {
 
 	return &user, nil
 }
+
+func (userModel *UserModelImpl) UpdateUser(user User) error {
+	query := `UPDATE Users SET email = ?, password = ?, first_name = ?, last_name = ?, points = ? WHERE id = ?`
+
+	_, err := userModel.DB.Exec(query, user.Email, user.Password, user.FirstName, user.LastName, user.Points, user.ID)
+
+	if err != nil {
+		fmt.Println("Error updating user", err)
+		return err
+	}
+
+	return nil
+}
