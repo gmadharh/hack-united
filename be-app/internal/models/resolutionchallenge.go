@@ -67,6 +67,12 @@ func (resolutionChallengeModel *ResolutionChallengeModelImpl) GetUserChallenges(
 func (resolutionChallengeModel *ResolutionChallengeModelImpl) DeleteChallenge(id int) error {
 	query := `DELETE FROM ResolutionChallenge WHERE id = ?`
 
-	fmt.Println(query)
+	_, err := resolutionChallengeModel.DB.Exec(query, id)
+
+	if err != nil {
+		fmt.Println("Error deleting challenge", err)
+		return err
+	}
+
 	return nil
 }
