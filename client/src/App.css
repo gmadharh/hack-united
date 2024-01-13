@@ -1,17 +1,25 @@
 .App {
-    background-image: url("assets/background.webp");
+  background-image: url("assets/background.webp");
+}
+
+.heading {
+  font-family: "Lemon", serif;
+}
+
+button, h3, p {
+  font-family: "Poppins", sans-serif;
 }
 
 .button-tile {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    height: 10vh;
-    gap: 10px;
-  }
-  
-  /* button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 10vh;
+  gap: 10px;
+}
+
+/* button {
     background-color: #4caf50;
     color: white;
     border: none;
@@ -27,8 +35,8 @@
   button:hover {
     background-color: #45a049;
   } */
-  
-  /* .wheel {
+
+/* .wheel {
     display: flex;
     align-items: center;
     justify-content: center;

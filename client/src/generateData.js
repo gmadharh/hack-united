@@ -7,8 +7,8 @@ export function generateData(numOptions = 5) {
         arr.push({
             option: num.toString(),
             style: { backgroundColor: randomColor({
-                hue: "green",
-                luminosity: "bright",
+                hue: "rgb",
+                luminosity: "light",
             }) },
         })
     }
