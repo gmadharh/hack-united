@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { DashboardContext } from "../contexts/DashboardContext";
 
 const DashboardNavbar = () => {
-  const { handleLogout } = useContext(DashboardContext);
   return (
     <nav className="bg-gray-700/25 flex justify-between items-center py-3 px-8 navbar">
       <Link to="/" className="text-3xl font-semibold text-white">
@@ -11,15 +10,16 @@ const DashboardNavbar = () => {
       </Link>
       <div>
         <div className="flex gap-5">
-          <Link to="/dashboard" className="text-xl font-medium text-white">
-            <p>Dashboard</p>
+          <Link to="/dashboard" className="text-xl font-medium text-white hover:underline">
+            <p>Find Resolutions</p>
           </Link>
-          <Link
-            onClick={handleLogout}
-            className="text-xl font-medium text-white"
-          >
-            <p>Logout </p>
+          <Link to="/dashboard/profile" className="text-xl font-medium text-white hover:underline">
+            <p>Profile</p>
           </Link>
+          <Link to="/dashboard/resolutions" className="text-xl font-medium text-white hover:underline">
+            <p>Saved Resolutions</p>
+          </Link>
+          
         </div>
       </div>
     </nav>

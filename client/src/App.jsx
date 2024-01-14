@@ -4,11 +4,14 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AppLayout from "./AppLayout";
 import DashboardLayout from "./DashboardLayout";
 
-import SpinWheel from "./pages/SpinWheel";
+import Challenges from "./pages/Challenges";
 import PageNotFound from "./pages/PageNotFound";
 import RegisterUser from "./pages/RegisterUser";
 import UserSignIn from "./pages/UserSignIn";
 import Home from "./pages/Home";
+import Dashboard from "./pages/Dashboard";
+import UserProfile from "./pages/UserProfile";
+import UserResolutions from "./pages/UserResolutions";
 
 import {
   createBrowserRouter,
@@ -36,7 +39,10 @@ function App() {
           <Route path="*" element={<PageNotFound />} />
         </Route>
         <Route path="dashboard" element={<DashboardLayout />}>
-          <Route index element={<SpinWheel />} />
+          <Route index element={<Dashboard />} />
+          <Route path="/dashboard/challenges" element={<Challenges />} />
+          <Route path="/dashboard/profile" element={<UserProfile />} />
+          <Route path="/dashboard/resolutions" element={<UserResolutions />} />
         </Route>
       </Route>
 

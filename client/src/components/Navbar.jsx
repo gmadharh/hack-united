@@ -16,7 +16,7 @@ const Navbar = () => {
       <div>
         <div className="flex gap-5">
           <Link to="/dashboard" className="text-xl font-medium text-white">
-            <p>Dashboard</p>
+            <p>Account</p>
           </Link>
 
           {!isLogin && (

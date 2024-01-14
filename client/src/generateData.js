@@ -1,15 +1,17 @@
 import randomColor from "randomcolor";
 
-export function generateData(numOptions = 5) {
+export function generateData(challenges) {
     const arr = []
 
-    for (let num = 0; num < numOptions; num++) {
+    for (let i = 0; i < challenges.length; i++) {
+        let challenge = challenges[i]
         arr.push({
-            option: num.toString(),
+            option: (i + 1).toString(),
             style: { backgroundColor: randomColor({
                 hue: "rgb",
                 luminosity: "light",
             }) },
+            challenge
         })
     }
 
