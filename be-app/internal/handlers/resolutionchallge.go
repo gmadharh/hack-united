@@ -53,6 +53,19 @@ func (resolutionHandler *ResolutionChallengeHandler) CreateChallenge(context *gi
 	})
 }
 
+func (resolutionHandler *ResolutionChallengeHandler) GetAllChallenges(context *gin.Context) {
+	challenges, err := resolutionHandler.DB.GetAllChallenges()
+
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{
+			"message": "Eror getting user challenges",
+			"error":   err.Error(),
+		})
+	}
+
+	context.JSON(http.StatusOK, gin.H{"challenges": challenges})
+}
+
 func (resolutionHandler *ResolutionChallengeHandler) GetUserChallenges(context *gin.Context) {
 	param := context.Param("id")
 	id, err := strconv.Atoi(param)

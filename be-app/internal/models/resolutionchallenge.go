@@ -40,6 +40,34 @@ func (resolutionChallengeModel *ResolutionChallengeModelImpl) CreateChallenge(ch
 	return nil
 }
 
+func (resolutionChallengeModel *ResolutionChallengeModelImpl) GetAllChallenges() ([]ResolutionChallenge, error) {
+	query := `SELECT * FROM ResolutionChallenge`
+
+	var challenges []ResolutionChallenge
+
+	rows, err := resolutionChallengeModel.DB.Query(query)
+
+	if err != nil {
+		fmt.Println("Error Querying database", err)
+		return nil, err
+	}
+
+	for rows.Next() {
+		var challenge ResolutionChallenge
+
+		rows.Scan(&challenge.ID, &challenge.Challenge, &challenge.UserID, &challenge.IsCompleted)
+
+		if err != nil {
+			fmt.Println("Error scanning into challenge srruct", err)
+			return nil, err
+		}
+
+		challenges = append(challenges, challenge)
+	}
+
+	return challenges, nil
+}
+
 func (resolutionChallengeModel *ResolutionChallengeModelImpl) GetUserChallenges(id int) ([]ResolutionChallenge, error) {
 	query := `SELECT * FROM ResolutionChallenge WHERE user_id = ?`
 
@@ -61,6 +89,8 @@ func (resolutionChallengeModel *ResolutionChallengeModelImpl) GetUserChallenges(
 			fmt.Println("Error scanning into challenge srruct", err)
 			return nil, err
 		}
+
+		challenges = append(challenges, challenge)
 	}
 
 	return challenges, nil
