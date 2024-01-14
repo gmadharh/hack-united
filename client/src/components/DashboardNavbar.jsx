@@ -2,11 +2,13 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { DashboardContext } from "../contexts/DashboardContext";
 
+import Logo from "../assets/logo.png";
+
 const DashboardNavbar = () => {
   return (
     <nav className="bg-gray-700/25 flex justify-between items-center py-3 px-8 navbar">
       <Link to="/" className="text-3xl font-semibold text-white">
-        <p>Name of App</p>
+      <img src={Logo} style={{width: "80%"}} />
       </Link>
       <div>
         <div className="flex gap-5">

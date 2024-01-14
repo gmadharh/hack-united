@@ -3,6 +3,8 @@ import { useContext } from "react";
 
 import { AuthContext } from "../contexts/AuthContext";
 
+import Logo from "../assets/logo.png";
+
 const Navbar = () => {
   const { isLogin } = useContext(AuthContext);
 
@@ -11,7 +13,7 @@ const Navbar = () => {
   return (
     <nav className="bg-gray-700/25 flex justify-between items-center py-3 px-8 navbar">
       <Link to="/" className="text-3xl font-semibold text-white">
-        <p>Name of App</p>
+        <img src={Logo} style={{ width: "80%" }} />
       </Link>
       <div>
         <div className="flex gap-5">
