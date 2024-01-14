@@ -9,6 +9,7 @@ export const DashboardContext = createContext();
 
 const DashboardContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [availableChallenges, setAvailableChallenges] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
@@ -28,16 +29,23 @@ const DashboardContextProvider = ({ children }) => {
     } catch (err) {
       navigate("/sign-in");
     }
-
   }, []);
 
   const handleLogout = () => {
+    // console.log(cookies)
     cookies.remove("jwt_token");
     navigate("/sign-in");
   };
 
   return !loading ? (
-    <DashboardContext.Provider value={{ user, handleLogout }}>
+    <DashboardContext.Provider
+      value={{
+        user,
+        handleLogout,
+        availableChallenges,
+        setAvailableChallenges,
+      }}
+    >
       {children}
     </DashboardContext.Provider>
   ) : (

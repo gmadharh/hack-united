@@ -19,6 +19,12 @@ button, h3, p, label, input {
   gap: 10px;
 }
 
+.bhdLno {
+  max-width: 700px;
+  max-height: 700px;
+}
+
+
 /* button {
     background-color: #4caf50;
     color: white;
