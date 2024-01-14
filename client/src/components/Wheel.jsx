@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { generateData } from "../generateData";
 
@@ -7,6 +7,7 @@ import ChallengesList from "./ChallangesList";
 import SpinWheelComponent from "./SpinWheelComponent";
 
 import { DashboardContext } from "../contexts/DashboardContext";
+import { createResolution } from "../controllers/manageResolutions";
 
 const WheelComponent = ({ challenges }) => {
   const [spinStatus, setSpinStatus] = useState(false);
@@ -18,8 +19,8 @@ const WheelComponent = ({ challenges }) => {
   const [tab, setTab] = useState("Challenges");
   const tabs = ["Challenges", "Spin"];
 
-  const {setAvailableChallenges} = useContext(DashboardContext)
-  const navigate = useNavigate()
+  const { setAvailableChallenges, user } = useContext(DashboardContext);
+  const navigate = useNavigate();
 
   const handleSpinClick = () => {
     if (!spinStatus) {
@@ -34,16 +35,31 @@ const WheelComponent = ({ challenges }) => {
 
   const onStopSpin = () => {
     console.log("prizeNumber", prizeNumber);
-    console.log(wheelData[prizeNumber].challenge)
+    console.log(wheelData[prizeNumber].challenge);
     setSpinStatus(false);
     setSpinComplete(true);
-  }
+  };
 
-  const claimPrize = () => {
+  const claimPrize = async () => {
     console.log("Claiming prize");
-    setAvailableChallenges(null)
-    navigate("/dashboard/resolutions")
-  }
+    setAvailableChallenges(null);
+
+    const claimStatement = wheelData[prizeNumber].challenge.replace(/\d./, "");
+
+    const resolution = {
+      userID: user.id,
+      challenge: claimStatement,
+      isCompleted: false,
+    };
+
+    const response = await createResolution(resolution)
+
+    if (response[0]) {
+      navigate("/dashboard/resolutions");
+    } else console.log(response[1]);
+
+    // navigate("/dashboard/resolutions")
+  };
 
   const activeStyle = "text-black bg-white text-xl py-4 px-8 rounded";
   const inactiveStyle =
