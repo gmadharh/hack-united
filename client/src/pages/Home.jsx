@@ -1,6 +1,3 @@
-import { useContext } from 'react';
-import { AuthContext } from '../contexts/AuthContext'
-
 const Home = () => {
   //   const { name } = useContext(AuthContext);
 

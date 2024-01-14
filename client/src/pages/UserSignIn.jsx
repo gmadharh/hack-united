@@ -1,13 +1,38 @@
 import { useState, useContext } from "react"
+import {useNavigate} from "react-router-dom"
 
 import { AuthContext } from "../contexts/AuthContext";
+import { loginUser } from "../controllers/loginUser";
 
 const UserSignIn = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [errorMsg, setErrorMsg] = useState(null);
 
-    const {handleSignIn} = useContext(AuthContext);
+    const {setCookie} = useContext(AuthContext);
+    const navigate = useNavigate();
+
+    const handleSubmit = async (e) => {
+      e.preventDefault()
+
+      if(!email || !password) return setErrorMsg("Please fill in all the fields")
+      
+      const user = {email, password}
+      const response = await loginUser(user)
+
+      if(!response[0]) {
+        setErrorMsg(response[1].message)
+      } else {
+        setErrorMsg(null)
+        const {token} = response[0]
+
+        if(token) {
+          setCookie(token)
+          navigate("/dashboard")
+        }
+      }
+    }
 
   return (
     <div className="container mx-auto mt-32 flex justify-center">
@@ -15,8 +40,11 @@ const UserSignIn = () => {
         <h2 className="heading text-5xl text-white mb-10 text-center">
           Sign In
         </h2>
-        <form onSubmit={(e) => handleSignIn(e, {email, password})}
+        <form onSubmit={handleSubmit}
          className="flex flex-col gap-8 w-4/5 self-center select-none">
+          <div>
+            {errorMsg && <span className="text-red-500 text-lg">{errorMsg}</span>}
+          </div>
           <div>
             <label className="block text-lg text-base text-white mb-2">
               Enter Email

@@ -1,31 +1,37 @@
-import { createContext, useState, useEffect } from "react";
-import { registerNewUser } from "../controllers/registerUser";
+import { createContext, useState } from "react";
+
+import { jwtDecode } from "jwt-decode";
+import Cookies from "universal-cookie";
 
 export const AuthContext = createContext();
+
+const validateToken = (token) => {
+  try {
+    jwtDecode(token);
+    return true;
+  } catch (err) {
+    return false;
+  }
+};
 
 const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
-  const handleSignIn = (e, user) => {
-    e.preventDefault();
-    console.log("Signing In", user);
-  };
+  const cookies = new Cookies();
+  const jwt = cookies.get("jwt_token");
 
-  const handleSignup = (e, user) => {
-    e.preventDefault();
-    console.log("Signing Up", user);
+  const isLogin = validateToken(jwt);
 
-    const response = registerNewUser(user);
+  const setCookie = (jwt_token) => {
+    const decodedToken = jwtDecode(jwt_token);
 
-    if (!response) {
-      console.log("User not found");
-    }
+    setUser(decodedToken);
 
-    console.log(response);
+    cookies.set("jwt_token", jwt_token);
   };
 
   return (
-    <AuthContext.Provider value={{ handleSignIn, handleSignup }}>
+    <AuthContext.Provider value={{ setCookie, user, isLogin }}>
       {children}
     </AuthContext.Provider>
   );

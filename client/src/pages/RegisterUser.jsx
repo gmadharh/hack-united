@@ -1,14 +1,38 @@
 import { useState, useContext } from "react";
 
 import { AuthContext } from "../contexts/AuthContext";
+import { registerUser } from "../controllers/registerUser";
+
+import {useNavigate} from "react-router-dom"
 
 const RegisterUser = () => {
   const [firstName, setFirstName] = useState("");  
   const [lastName, setLastName] = useState("");  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMsg, setErrorMsg] = useState(null);
 
-  const { handleSignup } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleSignup = async (e) => {
+    e.preventDefault();
+
+    const user = { firstName, lastName, email, password };
+
+    if(!firstName || !lastName || !email || !password) {
+      setErrorMsg("Please fill in all the fields");
+      return;
+    }
+
+    const response = await registerUser(user);
+
+    if(!response[0]) {
+      setErrorMsg(response[1].message)
+    } else {
+      setErrorMsg(null)
+      navigate("/sign-in")
+    }
+  }
 
   return (
     <div className="container mx-auto mt-32 flex justify-center">
@@ -16,8 +40,11 @@ const RegisterUser = () => {
         <h2 className="heading text-5xl text-white mb-10 text-center">
           Join In
         </h2>
-        <form onSubmit={(e) => handleSignup(e, {firstName, lastName, email, password})} 
+        <form onSubmit={handleSignup} 
         className="flex flex-col gap-8 w-4/5 self-center select-none">
+          <div>
+            {errorMsg && <span className="text-red-500 text-lg">{errorMsg}</span>}
+          </div>
           <div>
             <label className="block text-lg text-base text-white mb-2">
               Your First Name

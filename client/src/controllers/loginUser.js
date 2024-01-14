@@ -1,9 +1,9 @@
 import axios from "axios";
 
-export const registerUser = async (user) => {
+export const loginUser = async (user) => {
   try {
     const request = {
-      url: "http://localhost:8080/users/new",
+      url: "http://localhost:8080/users/login",
       method: "post",
       headers: {
         "Content-Type": "application/json",
