@@ -2,6 +2,7 @@ package models
 
 import (
 	"database/sql"
+	"errors"
 	"fmt"
 )
 
@@ -31,7 +32,19 @@ func NewUserModel(db *sql.DB) *UserModelImpl {
 func (userModel *UserModelImpl) CreateUser(user User) error {
 	query := `INSERT INTO Users (email, password, first_name, last_name, points) VALUES (?, ?, ?, ?, ?)`
 
-	_, err := userModel.DB.Exec(query, user.Email, user.Password, user.FirstName, user.LastName, user.Points)
+	exists, err := userModel.userExists(user.Email)
+
+	if err != nil {
+		fmt.Println("Error checking if user exists", err)
+		return err
+	}
+
+	if exists {
+		fmt.Println("User already exists")
+		return errors.New("User already exists")
+	}
+
+	_, err = userModel.DB.Exec(query, user.Email, user.Password, user.FirstName, user.LastName, user.Points)
 
 	if err != nil {
 		fmt.Println("Error inserting into users table", err)
@@ -114,4 +127,17 @@ func (userModel *UserModelImpl) UpdateUser(user User) error {
 	}
 
 	return nil
+}
+
+func (uModel *UserModelImpl) userExists(email string) (bool, error) {
+	query := `SELECT COUNT(*) FROM Users WHERE email = ?`
+
+	var count int
+	err := uModel.DB.QueryRow(query, email).Scan(&count)
+
+	if err != nil {
+		return false, err
+	}
+
+	return count > 0, nil
 }

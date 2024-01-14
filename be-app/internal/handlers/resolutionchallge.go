@@ -152,8 +152,6 @@ func (resolutionHandler *ResolutionChallengeHandler) GenerateUserChallenges(cont
 
 	content := data["choices"].([]interface{})[0].(map[string]interface{})["message"].(map[string]interface{})["content"].(string)
 
-	fmt.Println(content)
-
 	formattedContent := strings.Split(strings.TrimSpace(content), "\n")
 
 	context.JSON(http.StatusOK, formattedContent)
