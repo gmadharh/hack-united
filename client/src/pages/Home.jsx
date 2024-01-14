@@ -1,6 +1,4 @@
-import { useContext } from 'react'
-//import { useUsers } from "../controllers/fetchUsers";
-
+import { useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext'
 
 const Home = () => {

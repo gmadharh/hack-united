@@ -3,7 +3,8 @@ import { useState, useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 
 const RegisterUser = () => {
-  const [name, setName] = useState("");  
+  const [firstName, setFirstName] = useState("");  
+  const [lastName, setLastName] = useState("");  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -15,18 +16,31 @@ const RegisterUser = () => {
         <h2 className="heading text-5xl text-white mb-10 text-center">
           Join In
         </h2>
-        <form onSubmit={(e) => handleSignup(e, {name, email, password})} 
+        <form onSubmit={(e) => handleSignup(e, {firstName, lastName, email, password})} 
         className="flex flex-col gap-8 w-4/5 self-center select-none">
           <div>
             <label className="block text-lg text-base text-white mb-2">
-              Your Name
+              Your First Name
             </label>
             <input
               className="w-full border-b-4 border-white px-3 py-2 outline-none bg-transparent text-white"
               type="text"
-              placeholder="John Smith"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              placeholder="John"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+            />
+          </div>
+
+          <div>
+            <label className="block text-lg text-base text-white mb-2">
+              Your Last Name
+            </label>
+            <input
+              className="w-full border-b-4 border-white px-3 py-2 outline-none bg-transparent text-white"
+              type="text"
+              placeholder="Smith"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
             />
           </div>
 
