@@ -2,6 +2,7 @@ import "./App.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import AppLayout from "./AppLayout";
+import DashboardLayout from "./DashboardLayout";
 
 import SpinWheel from "./pages/SpinWheel";
 import PageNotFound from "./pages/PageNotFound";
@@ -14,7 +15,6 @@ import {
   createRoutesFromElements,
   RouterProvider,
   Route,
-  Navigate,
 } from "react-router-dom";
 
 const queryClient = new QueryClient();
@@ -28,13 +28,18 @@ function App() {
 
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route path="/" element={<AppLayout />}>
-        <Route index element={<Home />} />
-        <Route path="dashboard" element={<SpinWheel />} />
-        <Route path="register" element={<RegisterUser />} />
-        <Route path="sign-in" element={<UserSignIn />} />
-        <Route path="*" element={<PageNotFound />} />
+      <Route>
+        <Route path="/" element={<AppLayout />}>
+          <Route index element={<Home />} />
+          <Route path="register" element={<RegisterUser />} />
+          <Route path="sign-in" element={<UserSignIn />} />
+          <Route path="*" element={<PageNotFound />} />
+        </Route>
+        <Route path="dashboard" element={<DashboardLayout />}>
+          <Route index element={<SpinWheel />} />
+        </Route>
       </Route>
+
     )
   );
 

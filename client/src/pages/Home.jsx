@@ -1,8 +1,3 @@
-import { useContext } from 'react'
-//import { useUsers } from "../controllers/fetchUsers";
-
-import { AuthContext } from '../contexts/AuthContext'
-
 const Home = () => {
   //   const { name } = useContext(AuthContext);
 
