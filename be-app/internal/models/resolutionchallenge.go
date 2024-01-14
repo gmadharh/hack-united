@@ -29,7 +29,7 @@ func NewResolutionChallengeModel(db *sql.DB) *ResolutionChallengeModelImpl {
 func (resolutionChallengeModel *ResolutionChallengeModelImpl) CreateChallenge(challenge ResolutionChallenge) error {
 	query := `INSERT INTO ResolutionChallenge (challenge, user_id, is_completed) VALUES(?, ?, ?)`
 
-	_, err := resolutionChallengeModel.DB.Exec(query, challenge.Challenge, challenge.ID,
+	_, err := resolutionChallengeModel.DB.Exec(query, challenge.Challenge, challenge.UserID,
 		challenge.IsCompleted)
 
 	if err != nil {
