@@ -11,6 +11,7 @@ type ResolutionSubject struct {
 }
 
 type ResolutionSubjectModel interface {
+	GetAllSubjects() ([]ResolutionSubject, error)
 }
 
 type ResolutionSubjectModelImpl struct {

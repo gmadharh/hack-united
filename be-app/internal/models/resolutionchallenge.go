@@ -14,6 +14,8 @@ type ResolutionChallenge struct {
 
 type ResolutionChallengeModel interface {
 	CreateChallenge(challenge ResolutionChallenge) error
+	GetUserChallenges(id int) ([]ResolutionChallenge, error)
+	DeleteChallenge(id int) error
 }
 
 type ResolutionChallengeModelImpl struct {
