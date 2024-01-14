@@ -1,4 +1,4 @@
-# hack-united
+# PursuitPioneer - Hack United
 
 New Years Resolution project made for Hack United hackathon.
 
