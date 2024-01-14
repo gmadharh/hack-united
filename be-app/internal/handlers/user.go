@@ -45,7 +45,7 @@ func (userHandler *UserHandler) CreateUser(context *gin.Context) {
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{
 			"message": "Error creating user",
-			"error":   err,
+			"error":   err.Error(),
 		})
 		return
 	}
@@ -173,7 +173,7 @@ func (userHandler *UserHandler) AuthenticateUser(context *gin.Context) {
 		return
 	}
 
-	matches := utils.ComparePasswords(userLogin.Password, user.Password)
+	matches := utils.ComparePasswords(user.Password, userLogin.Password)
 
 	if !matches {
 		context.JSON(http.StatusNotAcceptable, gin.H{
