@@ -47,7 +47,7 @@ To run the application using Docker and Docker Compose, follow these steps:
 
 ## Contributors
 
-This project was developed by the team at Hack United for the New Year's Resolution theme.
+This project was developed by the team at Hack United for the New Year's Resolution theme. Hack United v2.
 
 ## Acknowledgments
 
